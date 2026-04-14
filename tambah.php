@@ -18,10 +18,11 @@
 
     <?php
         if(isset($_POST['tanggal']) && isset($_POST['nominal'])){
-            $tgl = $_POST['tanggal'] ." ". date("H:i:s");
+            $tgl = $_POST['tanggal'];
             $nom = $_POST['nominal'];
 
             if($tgl != '' && $nom != ''){
+                $tgl = $tgl ." ". date("H:i:s");
                 $transaksi = [$tgl => $nom];
                 if(isset($_COOKIE['transaksi'])){
                     $cookie = json_decode($_COOKIE['transaksi']);
@@ -39,5 +40,7 @@
             }
         }
     ?>
+
+    <a href="index.php">back</a>
 </body>
 </html>
