@@ -17,23 +17,26 @@
     </form>
 
     <?php
+        // require_once 'setting.php';
+
         if(isset($_POST['tanggal']) && isset($_POST['nominal'])){
             $tgl = $_POST['tanggal'];
             $nom = $_POST['nominal'];
 
             if($tgl != '' && $nom != ''){
-                $tgl = $tgl ." ". date("H:i:s");
-                $transaksi = [$tgl => $nom];
                 if(isset($_COOKIE['transaksi'])){
                     $cookie = json_decode($_COOKIE['transaksi']);
                     foreach ($cookie as $key => $data) {
                         $transaksi[$key] = $data;
                     }
                 }
+                $transaksi[$tgl] = $nom;
                 echo "<h2>Transaksi :</h2>";
                 foreach($transaksi as $key => $data){                  
                         echo "<p>tgl:{$key}<br>nom:{$data}</p>";
                 }
+
+                // sorting($transaksi);
                 setcookie('transaksi', json_encode($transaksi));
             }else {
                 echo "Isi dulu mas.....";
