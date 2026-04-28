@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
+    <style> 
         th, td{
             border: 1px solid black;
         }
@@ -12,11 +12,12 @@
 </head>
 <body>
     <nav>
-        <a href="./setting.php">Settings</a>
-        <a href="./tambah.php">Tambah</a>
+        [<a href="./tambah.php">Tambah Transaksi</a>]
+        [<a href="./setting.php">Settings</a>]
     </nav>
+    <hr style="height: 1px; background-color:black;">
     <?php 
-    if(isset($_COOKIE['transaksi'])){
+    if(isset($_COOKIE['transaksi'])){   
         echo "<table style='table-layout: fixed;'>
                 <tr>
                     <th>no</th>
@@ -44,7 +45,7 @@
 
        
     }else{
-        echo "Data kosong";
+        echo "<i>Belum ada Data</i>";
     }
     ?>
 </body>

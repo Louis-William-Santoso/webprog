@@ -1,3 +1,9 @@
+<?php
+$pesan = "";
+    if(isset($_POST['submit'])){
+        $pesan = "Data berhasil disimpan!";
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,22 +12,27 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>Setting</h1>
+    <hr style="height: 1px; background-color:black; margin-top: -10px;">
+    <?php if ($pesan != "") echo "<p style='color: red;'>$pesan</p>"?>
     <form action="" method="post">
-        <label>Urut dari:</label>
+        <label>Urut Berdasarkan :</label>
         <input type="radio" name="urutDari" value="tgl" onchange="this.form.submit()" checked>
         <label for="tgl">Tanggal</label>
-        <input type="radio" name="urutDari" value="nom" onchange="this.form.submit()">
-        <label for=""nom>Nominal</label>
+        <input type="radio" name="urutDari" value="nom">
+        <label for="nom">Nominal</label>
     </form>
 
-     <form action="" method="post">
-        <label>Urut dari:</label>
+     <form action="" method="post" style="margin-top:10px;">
+        <label>Arah :</label>
         <input type="radio" name="urutan" value="asc" onchange="this.form.submit()" checked>
         <label for="tgl">Ascending</label>
-        <input type="radio" name="urutan" value="dsc" onchange="this.form.submit()">
-        <label for=""nom>Descending</label>
-    </form>
+        <input type="radio" name="urutan" value="dsc">
+        <label for="nom">Descending</label>
 
+        <br></br>
+        <button type="submit" name="submit">Simpan</button>
+    </form>
     <?php
     $cookie = json_decode($_COOKIE['transaksi']);
     foreach($cookie as $key=>$val){
@@ -68,5 +79,7 @@
     print_r(sorting($tess, 'asc'));
     echo count($tess);
     ?>
+
+    <a href="index.php"><br>&lt;&lt;Kembali</br></a>
 </body>
 </html>
