@@ -1,5 +1,5 @@
 <?php
-function sorting($arr, $urutan = 'asc') {
+function sorting($arr, $urutan) {
     $count = count($arr);
     if ($count <= 1) return $arr;
     
@@ -14,18 +14,22 @@ function sorting($arr, $urutan = 'asc') {
 }
 
 function merge($kiri, $kanan, $urutan) {
-    $res = [];
+    $res      = [];
     while (count($kiri) > 0 && count($kanan) > 0) {
+        $keyKiri  = array_key_first($kiri);
+        $keyKanan = array_key_first($kanan);
         if($urutan === 'asc'){
-            $kondisi = ($kiri[0] <= $kanan[0]);
-            }else{
-            $kondisi = ($kiri[0] >= $kanan[0]);
+            $kondisi = ($kiri[$keyKiri] <= $kanan[$keyKanan]);
+        }else{
+            $kondisi = ($kiri[$keyKiri] >= $kanan[$keyKanan]);
         }
         
         if ($kondisi) {
-            $res[] = array_shift($kiri);
+            $res[$keyKiri] = $kiri[$keyKiri];
+            unset($kiri[$keyKiri]);
         } else {
-            $res[] = array_shift($kanan);
+            $res[$keyKanan] = $kanan[$keyKanan];
+            unset($kanan[$keyKanan]);
         }
     }
     return array_merge($res, $kiri, $kanan);
@@ -56,6 +60,15 @@ function merge($kiri, $kanan, $urutan) {
         <p class="border-2 border-zinc-400 mt-3.5"></p>
         </nav>
         <?php
+        if(isset($_COOKIE['sort'])){
+            $sort = get_object_vars(json_decode($_COOKIE['sort']));
+        }else{
+            $sort = ([
+                'urutDari' => 'nom',
+                'arah'     => 'dsc'
+            ]);
+        }
+
         if(isset($_COOKIE['transaksi'])){   
             echo "<table style='margin: 1rem; margin-bottom: 2rem;'>
                     <tr>
@@ -66,9 +79,24 @@ function merge($kiri, $kanan, $urutan) {
             $strData = "no,Tanggal, nominal\n";
             $index = 0;
             $data = get_object_vars(json_decode($_COOKIE['transaksi']));
-
+            
+            
+            switch ($sort['urutDari']) {
+                case 'tgl':
+                    $dataKey = sorting(array_keys($data), 'dsc');
+                    $arrSort = [];
+                    foreach($dataKey as $key){
+                        $arrSort[$key] = $data[$key];
+                    }
+                    $data = $arrSort;
+                    break;
+                default:
+                    $data = sorting($data, $sort['arah']);
+                    break;
+            }
             foreach($data as $key => $val){
                 $index +=1 ;
+                $val = number_format($val,0,'.',',');
                 echo "<tr>
                         <td style='border: 2px white solid; padding-left: 5px;'>$index</td>
                         <td style='border: 2px white solid; padding: 5px;'>$key</td> 
@@ -77,6 +105,7 @@ function merge($kiri, $kanan, $urutan) {
 
                 $strData = $strData . "$index,$key,$val\n";
             }
+            setcookie('transaksi', json_encode($data));
 
             if(!is_dir("docs")){
                 mkdir("docs", 777, true, null);

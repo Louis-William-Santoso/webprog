@@ -54,7 +54,7 @@
                     $transaksi[$key] = $data;
                  }
             }
-            $transaksi[$tgl] = $nom;
+            $transaksi[$tgl] = (int)$nom;
             echo "<h2>Transaksi :</h2>";
             foreach($transaksi as $key => $data){                  
                     echo "<p>tgl:{$key}<br>nom: " . number_format($data,0,'.',',') . "</p>";

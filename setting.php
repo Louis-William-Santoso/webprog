@@ -2,11 +2,11 @@
 $pesan = "";
 $data  = "";
 if(isset($_POST['urutDari']) && isset($_POST['arah'])){
-    $pesan = "<i style='color:green'>Data berhasil Disimpan</i>";
     $data = ([
         'urutDari' => $_POST['urutDari'],
         'arah'     => $_POST['arah']
     ]);
+    $pesan = "<i style='color:green'>Data berhasil Disimpan<br>Urut:{$_POST['urutDari']} Arah:{$_POST['arah']}</i>";
     setcookie('sort', json_encode($data));
     }
 ?>
