@@ -25,10 +25,18 @@ function merge($kiri, $kanan, $urutan) {
         }
         
         if ($kondisi) {
-            $res[$keyKiri] = $kiri[$keyKiri];
+            if (is_string($keyKiri)) {
+                $res[$keyKiri] = $kiri[$keyKiri];
+            } else {
+                $res[] = $kiri[$keyKiri];
+            }
             unset($kiri[$keyKiri]);
         } else {
-            $res[$keyKanan] = $kanan[$keyKanan];
+            if (is_string($keyKanan)) {
+                $res[$keyKanan] = $kanan[$keyKanan];
+            } else {
+                $res[] = $kanan[$keyKanan];
+            }
             unset($kanan[$keyKanan]);
         }
     }
@@ -83,7 +91,7 @@ function merge($kiri, $kanan, $urutan) {
             
             switch ($sort['urutDari']) {
                 case 'tgl':
-                    $dataKey = sorting(array_keys($data), 'dsc');
+                    $dataKey = sorting(array_keys($data), $sort['arah']);
                     $arrSort = [];
                     foreach($dataKey as $key){
                         $arrSort[$key] = $data[$key];
@@ -125,9 +133,9 @@ function merge($kiri, $kanan, $urutan) {
         <div class="m-4">
             <h2 class="text-2xl">Made By :</h2>
             <ul>
-                <li>Kelvin Adrian R G (160424089)</li>
-                <li>Clarissa Nadine M (160424021)</li>
                 <li>Louis William S (160424006)</li>
+                <li>Clarissa Nadine M (160424021)</li>
+                <li>Kelvin Adrian R G (160424089)</li>
             </ul>
         </div>
     </footer>

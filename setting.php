@@ -1,6 +1,8 @@
 <?php
 $pesan = "";
 $data  = "";
+$urutDari = "tgl";
+$arah = "asc";
 if(isset($_POST['urutDari']) && isset($_POST['arah'])){
     $data = ([
         'urutDari' => $_POST['urutDari'],
@@ -8,7 +10,15 @@ if(isset($_POST['urutDari']) && isset($_POST['arah'])){
     ]);
     $pesan = "<i style='color:green'>Data berhasil Disimpan<br>Urut:{$_POST['urutDari']} Arah:{$_POST['arah']}</i>";
     setcookie('sort', json_encode($data));
+    $urutDari = $_POST['urutDari'];
+    $arah = $_POST['arah'];
+} elseif(isset($_COOKIE['sort'])) {
+    $sortCookie = json_decode($_COOKIE['sort'], true);
+    if(is_array($sortCookie)) {
+        $urutDari = isset($sortCookie['urutDari']) ? $sortCookie['urutDari'] : "tgl";
+        $arah = isset($sortCookie['arah']) ? $sortCookie['arah'] : "asc";
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,9 +40,9 @@ if(isset($_POST['urutDari']) && isset($_POST['arah'])){
             <div class="flex">
                 <p class="w-52">Urut Berdasarkan</p>:
                 <div class="m-1">
-                    <input type="radio" name="urutDari" value="tgl" onchange="this.form.submit()" checked>
+                    <input type="radio" name="urutDari" value="tgl" onchange="this.form.submit()" <?php echo ($urutDari == 'tgl') ? 'checked' : ''; ?>>
                     <label for="tgl">Tanggal</label>
-                    <input type="radio" name="urutDari" value="nom">
+                    <input type="radio" name="urutDari" value="nom" onchange="this.form.submit()" <?php echo ($urutDari == 'nom') ? 'checked' : ''; ?>>
                     <label for="nom">Nominal</label>
                 </div>
             </div>
@@ -40,9 +50,9 @@ if(isset($_POST['urutDari']) && isset($_POST['arah'])){
             <div class="flex">
                 <p class="w-52">Arah</p>:
                 <div class="m-1">    
-                    <input type="radio" name="arah" value="asc" onchange="this.form.submit()" checked>
+                    <input type="radio" name="arah" value="asc" onchange="this.form.submit()" <?php echo ($arah == 'asc') ? 'checked' : ''; ?>>
                     <label for="tgl">Ascending</label>
-                    <input type="radio" name="arah" value="dsc">
+                    <input type="radio" name="arah" value="dsc" onchange="this.form.submit()" <?php echo ($arah == 'dsc') ? 'checked' : ''; ?>>
                     <label for="nom">Descending</label>
                 </div>
             </div>
