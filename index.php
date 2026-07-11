@@ -55,11 +55,11 @@
             <h2>Inisialisasi</h2>
             <form>
                 <div class="form-group">
-                    <label for="baris">Jumlah Baris:</label>
+                    <label>Jumlah Baris:</label>
                     <input id="jumlahBaris" type="number" min=1>
                 </div>
                 <div class="form-group">
-                    <label for="kolom">Jumlah Kolom:</label>
+                    <label>Jumlah Kolom:</label>
                     <input id="jumlahKolom" type="number" min=1>
                 </div>
                 <button id="inisialisasi" type="button">Generate</button>
@@ -70,11 +70,11 @@
             <h2>Okupansi</h2>
             <form>
                 <div class="form-group">
-                    <label for="baris">Baris:</label>
+                    <label>Baris:</label>
                     <input style="width:180px;" id="okupasiBaris" type="number" min=1><br>
                 </div>
                 <div class="form-group">
-                    <label for="kolom">Kolom:</label>
+                    <label>Kolom:</label>
                     <input style="width:180px;" id="okupasiKolom" type="number" min=1><br>
                 </div>
                 <div class="form-group">
